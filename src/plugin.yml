@@ -1,0 +1,6 @@
+---
+name: Logger
+main: tk.t11e.logger.main.Main
+version: '0.1-SNAPSHOT'
+author: booky10
+description: Customizable Logger Plugin with an API.

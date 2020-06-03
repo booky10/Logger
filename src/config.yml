@@ -1,0 +1,34 @@
+---
+# General
+logFormat: '[%TIME% %LEVEL%]: [%NAME%] %MESSAGE%'
+
+# Chat
+logChat: true
+logChatFolder: chat
+
+# Commands
+logCommands: true
+logCommandsFolder: commands
+
+# Joins
+logJoins: true
+logJoinsFolder: joins
+
+# Lefts
+logLefts: true
+logLeftsFolder: lefts
+
+# Teleports
+logTeleports: true
+logTeleportsFolder: teleports
+
+# Pings
+logPings: true
+logPingsFolder: pings
+
+# Custom Logger (Put EventNames that should be logged in the list)
+logEvents: false
+logEventsFolder: custom
+logEventsEvents:
+  - 'BlockBreakEvent'
+  - 'BlockPlaceEvent'
