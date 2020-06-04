@@ -37,9 +37,9 @@ class LogHandler {
         String customFolderName = config.getString("logEventsFolder");
         String chatFolderName = config.getString("logChatFolder");
         String commandFolderName = config.getString("logCommandsFolder");
-        String joinFolderName = config.getString("logEventsFolder");
-        String leaveFolderName = config.getString("logChatFolder");
-        String teleportFolderName = config.getString("logCommandsFolder");
+        String joinFolderName = config.getString("logJoinsFolder");
+        String leaveFolderName = config.getString("logLeftsFolder");
+        String teleportFolderName = config.getString("logTeleportsFolder");
         String pingFolderName = config.getString("logPingsFolder");
 
         customFolder = new File(parentFolder + File.separator + customFolderName);
@@ -50,20 +50,36 @@ class LogHandler {
         teleportFolder = new File(parentFolder + File.separator + teleportFolderName);
         pingFolder = new File(parentFolder + File.separator + pingFolderName);
 
-        if (!customFolder.exists())
-            customFolder.mkdirs();
-        if (!chatFolder.exists())
-            chatFolder.mkdirs();
-        if (!commandFolder.exists())
-            commandFolder.mkdirs();
-        if (!joinFolder.exists())
-            joinFolder.mkdirs();
-        if (!leaveFolder.exists())
-            leaveFolder.mkdirs();
-        if (!teleportFolder.exists())
-            teleportFolder.mkdirs();
-        if (!pingFolder.exists())
-            pingFolder.mkdirs();
+        //Cleaning/Creating
+        if (!customFolder.exists()) customFolder.mkdirs();
+        else clean(customFolder);
+
+        if (!chatFolder.exists()) chatFolder.mkdirs();
+        else clean(chatFolder);
+
+        if (!commandFolder.exists()) commandFolder.mkdirs();
+        else clean(commandFolder);
+
+        if (!joinFolder.exists()) joinFolder.mkdirs();
+        else clean(joinFolder);
+
+        if (!leaveFolder.exists()) leaveFolder.mkdirs();
+        else clean(leaveFolder);
+
+        if (!teleportFolder.exists()) teleportFolder.mkdirs();
+        else clean(teleportFolder);
+
+        if (!pingFolder.exists()) pingFolder.mkdirs();
+        else clean(pingFolder);
+    }
+
+    private void clean(File folder) {
+        if (!folder.isDirectory()) return;
+        File[] files = folder.listFiles();
+        if (files != null)
+            for (File file : files)
+                if (!file.getName().endsWith(".log"))
+                    file.delete();
     }
 
     public String getFormat() {
@@ -99,6 +115,7 @@ class LogHandler {
                 format = format.replace("%DATE%", logDate);
                 format = format.replace("%LEVEL%", record.getLevel().getName());
                 format = format.replace("%NAME%", record.getLoggerName());
+                format = format.replace("%MESSAGE%", record.getMessage());
                 return format + "\n";
             }
         };
